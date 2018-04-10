@@ -45,7 +45,7 @@ function main() {
             return;
         }
 
-        asyncLib.eachSeries(csvFile, doWork, (err) => {
+        asyncLib.eachSeries([csvFile], doWork, (err) => {
             if (err) {
                 console.error(chalk.red(err.stack));
                 return;
