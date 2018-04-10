@@ -27,7 +27,7 @@ function doWork(course, eachCB) {
 }
 
 function readCSV(cb) {
-    fs.readFile('Spring Online Course Copy - Semester Blueprints.csv', 'utf8', (err, data) => {
+    fs.readFile('Spring Online Course Copy - Semester Blueprints2.csv', 'utf8', (err, data) => {
         if (err) {
             cb(err, null);
             return;
@@ -45,7 +45,7 @@ function main() {
             return;
         }
 
-        asyncLib.eachSeries([csvFile], doWork, (err) => {
+        asyncLib.eachSeries(csvFile, doWork, (err) => {
             if (err) {
                 console.error(chalk.red(err.stack));
                 return;
