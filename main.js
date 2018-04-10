@@ -21,8 +21,8 @@ function doWork(course, eachCB) {
         enableBP,
         copyGroups,
         latePolicy,
+        lockModules,
         // sectionSettings,
-        // lockModules,
     ], eachCB);
 }
 
