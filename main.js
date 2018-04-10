@@ -1,33 +1,57 @@
-const fs = require('fs');
-//const canvas = require('canvas-wrapper');
-const d3 = require('d3-dsv');
+/* eslint no-console:0 */
 
-function convertCSV(csvString) {
-    return new Promise((resolve, reject) => {
-        resolve(d3.csvParse(csvString));
-    });
+const fs = require('fs');
+const d3 = require('d3-dsv');
+const asyncLib = require('async');
+const chalk = require('chalk');
+
+const disableBP = require('./disableBP.js');
+const setSettings = require('./setSettings.js');
+const enableBP = require('./enableBP.js');
+const copyGroups = require('./copyGroups.js');
+const latePolicy = require('./latePolicy.js');
+// const publishCourse = require('./publishCourse.js');
+
+function doWork(course, eachCB) {
+    asyncLib.waterfall([
+        asyncLib.constant(course),
+        disableBP,
+        setSettings,
+        enableBP,
+        copyGroups,
+        latePolicy,
+        // sectionSettings,
+    ], eachCB);
 }
 
-function readCSV() {
-    return new Promise((resolve, reject) => {
-        fs.readFile('Spring Online Course Copy - Semester Blueprints.csv', 'utf8', (err, data) => {
-            if (err) {
-                reject(err);
-                return;
-            } else {
-                resolve(data);
-            }
-
-        });
+function readCSV(cb) {
+    fs.readFile('Spring Online Course Copy - Semester Blueprints.csv', 'utf8', (err, data) => {
+        if (err) {
+            cb(err, null);
+            return;
+        }
+        // parse CSV
+        data = d3.csvParse(data);
+        cb(null, data);
     });
-
-
 }
 
 function main() {
-    readCSV()
-        .then(convertCSV)
-        .then(console.log);
+    readCSV((err, csvFile) => {
+        if (err) {
+            console.error(chalk.red(err.stack));
+            return;
+        }
+
+        asyncLib.eachSeries(csvFile, doWork, (err)=> {
+            if (err) {
+                console.error(chalk.red(err.stack));
+                return;
+            }
+            console.log(chalk.blue('Done! :D'));
+        });
+
+    });
 }
 
 main();
