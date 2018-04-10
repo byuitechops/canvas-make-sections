@@ -5,9 +5,9 @@ const d3 = require('d3-dsv');
 const asyncLib = require('async');
 const chalk = require('chalk');
 
-// const disableBP = require('./disableBP.js');
+const disableBP = require('./disableBP.js');
 // const setSettings = require('./setSettings.js');
-// const enableBP = require('./enableBP.js');
+const enableBP = require('./enableBP.js');
 // const copyGroups = require('./copyGroups.js');
 const latePolicy = require('./latePolicy.js');
 // const publishCourse = require('./publishCourse.js');
@@ -15,9 +15,9 @@ const latePolicy = require('./latePolicy.js');
 function doWork(course, eachCB) {
     asyncLib.waterfall([
         asyncLib.constant(course),
-        // disableBP,
+        disableBP,
         // setSettings,
-        // enableBP,
+        enableBP,
         // copyGroups,
         latePolicy,
         // sectionSettings,
@@ -43,7 +43,7 @@ function main() {
             return;
         }
 
-        asyncLib.eachSeries(csvFile, doWork, (err) => {
+        asyncLib.eachSeries([csvFile], doWork, (err) => {
             if (err) {
                 console.error(chalk.red(err.stack));
                 return;

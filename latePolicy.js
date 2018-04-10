@@ -7,7 +7,16 @@ module.exports = (course, callback) => {
             console.log(chalk.red(err.stack));
             callback(null, course);
         } else {
-            canvas.put(`/api/v1/courses/${course.course_id}/ late_policy`, data, (err) => {
+            var masterLatePolicy = {
+                'late_policy[missing_submission_deduction_enabled]': data[0].late_policy.missing_submission_deduction_enabled,
+                'late_policy[missing_submission_deduction]': data[0].late_policy.missing_submission_deduction,
+                'late_policy[late_submission_deduction_enabled]': data[0].late_policy.late_submission_deduction_enabled,
+                'late_policy[late_submission_deduction]': data[0].late_policy.late_submission_deduction,
+                'late_policy[late_submission_interval]': data[0].late_policy.late_submission_interval,
+                'late_policy[late_submission_minimum_percent_enabled]': data[0].late_policy.late_submission_minimum_percent_enabled,
+                'late_policy[late_submission_minimum_percent]': data[0].late_policy.late_submission_minimum_percent,
+            };
+            canvas.post(`/api/v1/courses/${course.course_id}/late_policy`, masterLatePolicy, (err) => {
                 if (err) {
                     console.log(chalk.red(err.stack));
                 } else {
