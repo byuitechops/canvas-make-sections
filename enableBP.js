@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const canvas = require('canvas-wrapper');
 const chalk = require('chalk');
 

@@ -5,22 +5,24 @@ const d3 = require('d3-dsv');
 const asyncLib = require('async');
 const chalk = require('chalk');
 
-const disableBP = require('./disableBP.js');
+const unlinkBP = require('./unlinkBP.js');
 // const setSettings = require('./setSettings.js');
-const enableBP = require('./enableBP.js');
-// const copyGroups = require('./copyGroups.js');
-const latePolicy = require('./latePolicy.js');
+// const enableBP = require('./enableBP.js');
+const copyGroups = require('./copyGroups.js');
+// const latePolicy = require('./latePolicy.js');
 // const publishCourse = require('./publishCourse.js');
+// const lockModules = require('./lockModules.js);
 
 function doWork(course, eachCB) {
     asyncLib.waterfall([
         asyncLib.constant(course),
-        disableBP,
+        unlinkBP,
         // setSettings,
         enableBP,
         // copyGroups,
         latePolicy,
         // sectionSettings,
+        // lockModules,
     ], eachCB);
 }
 
