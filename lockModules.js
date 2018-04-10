@@ -10,7 +10,26 @@ module.exports = (course, callback) => {
 
 
     function lockItems() {
+        function lock(item, cb) {
+            canvas.put(`/api/v1/courses/${courseID}/blueprint_templates/default/restrict_item`, item, (itemErr) => {
+                if (itemErr) {
+                    console.error(itemErr);
+                } else {
+                    console.log(`Locked item #{item.id} ${item.type}`);
+                }
 
+                cb(null);
+            });
+        }
+
+        asyncLib.eachLimit(itemsToLock, 20, lock, (err) => {
+            if (err) {
+                /* this should never be called */
+                console.error(chalk.red(err));
+            }
+            console.log('Locked all items');
+            callback(null, course);
+        });
     }
 
 
