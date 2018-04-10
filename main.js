@@ -6,10 +6,10 @@ const asyncLib = require('async');
 const chalk = require('chalk');
 
 const unlinkBP = require('./unlinkBP.js');
-// const setSettings = require('./setSettings.js');
-// const enableBP = require('./enableBP.js');
+const setSettings = require('./setSettings.js');
+const enableBP = require('./enableBP.js');
 const copyGroups = require('./copyGroups.js');
-// const latePolicy = require('./latePolicy.js');
+const latePolicy = require('./latePolicy.js');
 // const publishCourse = require('./publishCourse.js');
 // const lockModules = require('./lockModules.js);
 
@@ -17,9 +17,9 @@ function doWork(course, eachCB) {
     asyncLib.waterfall([
         asyncLib.constant(course),
         unlinkBP,
-        // setSettings,
-        // enableBP,
-        // copyGroups,
+        setSettings,
+        enableBP,
+        copyGroups,
         latePolicy,
         // sectionSettings,
         // lockModules,
