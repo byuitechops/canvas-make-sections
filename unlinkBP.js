@@ -2,7 +2,7 @@ const canvas = require('canvas-wrapper');
 const chalk = require('chalk');
 
 module.exports = (course, callback) => {
-    canvas.put(`/api/v1/courses/sis_course_id:${course.blueprint_course_id}/blueprint_templates/:template_id/update_associations`,
+    canvas.put(`/api/v1/courses/sis_course_id:${course.blueprint_course_id}/blueprint_templates/:default/update_associations`,
         [null, course.course_id], (err) => {
             if (err) {
                 console.log(chalk.red(err.stack));
