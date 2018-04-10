@@ -17,8 +17,8 @@ function doWork(course, eachCB) {
     asyncLib.waterfall([
         asyncLib.constant(course),
         unlinkBP,
-        setSettings,
         enableBP,
+        setSettings,
         copyGroups,
         latePolicy,
         lockModules,

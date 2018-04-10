@@ -2,14 +2,20 @@ const canvas = require('canvas-wrapper');
 const chalk = require('chalk');
 
 module.exports = (course, callback) => {
-    canvas.putJSON(`/api/v1/courses/sis_course_id:${course.blueprint_course_id}/blueprint_templates/default/update_associations`,
-        { 'course_ids_to_remove': [course.course_id] }, (err) => {
-            if (err) {
-                console.log(chalk.red(err.stack));
-                callback(null, course);
-            } else {
-                console.log(chalk.blue(`Blueprint course disassociated with the Master course - ${course.course_id}`));
-                callback(null, course);
-            }
-        });
+
+    /* ERROR this doesn't actually seem to do anything... */
+
+    var bpCourseID = encodeURI(`sis_course_id:${course.blueprint_course_id}`);
+    // courseID = encodeURI(`sis_course_id:${course.course_id}`);
+    canvas.putJSON(`/api/v1/courses/${bpCourseID}/blueprint_templates/default/update_associations`, {
+        'course_ids_to_remove': [`sis_course_id:${encodeURI(course.course_id)}`]
+    }, (err, body) => {
+        if (err) {
+            console.log(chalk.red(err.stack));
+            callback(err, course);
+        } else {
+            console.log(chalk.blue(`Blueprint course disassociated with the Master course - ${course.course_id}`));
+            callback(null, course);
+        }
+    });
 };
