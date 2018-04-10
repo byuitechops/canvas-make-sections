@@ -5,6 +5,22 @@ const canvas = require('canvas-wrapper');
 // module.exports = (course, callback) => {
 function stuff(course, callback) {
 
+    function enableNewGradebook() {
+        // var sisID = encodeURI(`sis_course_id:${course.course_id}`);
+        var sisID = course.course_id,
+            putObj = {state: 'on'};
+
+        canvas.put(`/api/v1/courses/${sisID}/features/flags/new_gradebook`, putObj, (err, newFeatures) => {
+            if (err) {
+                console.error(chalk.red(err));
+            } else {
+                console.log('Enabled new gradebook');
+            }
+
+            callback(null, course);
+        });
+
+    }
 
     function updateSettings(description) {
         /* enable general locked objects (points) */
@@ -31,8 +47,10 @@ function stuff(course, callback) {
         canvas.put(`/api/v1/courses/${newSIS}`, putObj, (putErr, updateCourse) => {
             if (putErr) {
                 console.error(chalk.red(putErr));
+            } else {
+                console.log('Updated course settings');
             }
-            callback(putErr, course);
+            enableNewGradebook();
         });
     }
 
