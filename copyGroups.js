@@ -1,3 +1,5 @@
+const canvasCopyGroups = require('canvas-copy-groups');
+
 module.exports = (course, callback) => {
 
     
