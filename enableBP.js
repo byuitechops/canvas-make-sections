@@ -4,7 +4,7 @@ const canvas = require('canvas-wrapper');
 const chalk = require('chalk');
 
 module.exports = (course, callback) => {
-    canvas.put(`/api/v1/courses/${course.course_id}`, { 'course[blueprint]': true }, (err) => {
+    canvas.put(`/api/v1/courses/sis_course_id:${course.course_id}`, { 'course[blueprint]': true }, (err) => {
         if (err) {
             console.log(chalk.red(err.stack));
             callback(null, course);

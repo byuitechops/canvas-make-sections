@@ -16,7 +16,7 @@ module.exports = (course, callback) => {
                 'late_policy[late_submission_minimum_percent_enabled]': data[0].late_policy.late_submission_minimum_percent_enabled,
                 'late_policy[late_submission_minimum_percent]': data[0].late_policy.late_submission_minimum_percent,
             };
-            canvas.post(`/api/v1/courses/${course.course_id}/late_policy`, masterLatePolicy, (err) => {
+            canvas.post(`/api/v1/courses/sis_course_id:${course.course_id}/late_policy`, masterLatePolicy, (err) => {
                 if (err) {
                     console.log(chalk.red(err.stack));
                 } else {

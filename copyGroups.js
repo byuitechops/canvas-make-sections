@@ -4,7 +4,7 @@ const chalk = require('chalk');
 
 module.exports = (course, callback) => {
     // sourceID, targetID, deleteDefault
-    canvasCopyGroups(course.blueprint_course_id, course.course_id)
+    canvasCopyGroups(`sis_course_id:${course.blueprint_course_id}`, `sis_course_id:${course.course_id}`)
         .then(() => {
             console.log(chalk.blue(`Copying groups complete - ${course.course_id}`));
             callback(null, course);
