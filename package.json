@@ -6,6 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuitechops/canvas-make-sections.git"
+  },
   "author": "Daniel Green & Cal Wilson",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "canvas-wrapper": "github:byuitechops/canvas-wrapper",
+    "d3-dsv": "^1.0.8"
+  }
 }
