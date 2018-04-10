@@ -10,8 +10,8 @@ const setSettings = require('./setSettings.js');
 const enableBP = require('./enableBP.js');
 const copyGroups = require('./copyGroups.js');
 const latePolicy = require('./latePolicy.js');
+const lockModules = require('./lockModules.js');
 // const publishCourse = require('./publishCourse.js');
-// const lockModules = require('./lockModules.js);
 
 function doWork(course, eachCB) {
     asyncLib.waterfall([
