@@ -6,7 +6,7 @@ module.exports = (course, callback) => {
     // sourceID, targetID, deleteDefault
     canvasCopyGroups(course.blueprint_course_id, course.course_id)
         .then(() => {
-            console.log('Copying groups complete');
+            console.log(chalk.blue(`Copying groups complete - ${course.course_id}`));
             callback(null, course);
         })
         .catch((err) => {
