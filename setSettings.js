@@ -17,9 +17,8 @@ module.exports = (course, callback) => {
                 console.log('Error enabling new gradebook');
                 console.error(chalk.red(err));
             } else {
-                console.log('Enabled new gradebook');
+                console.log(chalk.green('Enabled new gradebook'));
             }
-
 
             callback(null, course);
         });
@@ -33,7 +32,7 @@ module.exports = (course, callback) => {
             // var newSIS = course.course_id, // TESTING
             putObj = {
                 'course[course_format]': 'online',
-                'course[grading_standard_id]': 1,
+                // 'course[grading_standard_id]': 1, /// IDK WHAT THIS DOES....
                 'course[blueprint_restrictions]': {
                     content: false,
                     points: true,
@@ -52,7 +51,7 @@ module.exports = (course, callback) => {
                 console.log('Error updating settings');
                 console.error(chalk.red(putErr));
             } else {
-                console.log('Updated course settings');
+                console.log(chalk.green('Updated course settings'));
             }
 
             enableNewGradebook();
@@ -69,8 +68,13 @@ module.exports = (course, callback) => {
                 updateSettings(null);
                 return;
             }
-            // ERROR for some reason this property is not included on the returned course object
-            console.log('retrieved old description');
+            // TODO for some reason this property is not included on the returned course object
+            if (oldCourse[0].public_description !== undefined) {
+                console.log('retrieved old description');
+            } else {
+                console.log(chalk.yellow('Unable to pull description or description was empty'));
+            }
+            
             updateSettings(oldCourse[0].public_description);
         });
     }
