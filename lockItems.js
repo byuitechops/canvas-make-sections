@@ -103,12 +103,10 @@ module.exports = (course, callback) => {
                 });
                 itemsToLock = itemsToLock.concat(files);
             }
-            lockItems();
+            getModules();
         });
     }
-
     getFiles();
-    getModules();
 };
 
 // TESTING
