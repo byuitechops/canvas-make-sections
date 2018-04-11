@@ -8,6 +8,7 @@ module.exports = (course, callback) => {
 // function work(course, callback) {
     var itemsToLock = [];
     var courseID = encodeURI(`sis_course_id:${course.course_id}`);
+    var lockCount = 0;
     // var courseID = course.course_id; //TESTING
 
 
@@ -17,7 +18,7 @@ module.exports = (course, callback) => {
                 if (itemErr) {
                     console.error(chalk.red(itemErr.stack));
                 } else {
-                    console.log(`Locked item ${item.id} ${item.type}`);
+                    lockCount++;
                 }
 
                 cb(null);
@@ -29,7 +30,7 @@ module.exports = (course, callback) => {
                 /* this should never be called */
                 console.error(chalk.red(err.stack));
             }
-            console.log('Locked all items');
+            console.log(`Locked ${lockCount} item(s)`);
             callback(null, course);
         });
     }

@@ -20,7 +20,6 @@ module.exports = (course, callback) => {
                 console.log('Enabled new gradebook');
             }
 
-
             callback(null, course);
         });
 

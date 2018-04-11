@@ -17,7 +17,7 @@ const lockModules = require('./lockModules.js');
 function syncCourse(course, eachCB) {
     asyncLib.waterfall([
         asyncLib.constant(course),
-        unlinkBP,
+        // unlinkBP,
         enableBP,
         setSettings,
         copyGroups,
