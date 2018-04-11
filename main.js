@@ -11,7 +11,7 @@ const setSettings = require('./setSettings.js');
 const enableBP = require('./enableBP.js');
 const copyGroups = require('./copyGroups.js');
 const latePolicy = require('./latePolicy.js');
-const lockModules = require('./lockModules.js');
+const lockItems = require('./lockItems.js');
 // const publishCourse = require('./publishCourse.js');
 
 function syncCourse(course, eachCB) {
@@ -23,7 +23,7 @@ function syncCourse(course, eachCB) {
         setSettings,
         copyGroups,
         latePolicy,
-        lockModules,
+        lockItems,
         // sectionSettings, // FOR SECTIONS ONLY!
     ], eachCB);
 }

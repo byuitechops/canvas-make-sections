@@ -5,12 +5,11 @@ const chalk = require('chalk');
 const asyncLib = require('async');
 
 module.exports = (course, callback) => {
-// function work(course, callback) { // TESTING
+    // function work(course, callback) { // TESTING
     var itemsToLock = [];
     var courseID = encodeURI(`sis_course_id:${course.course_id}`);
     var lockCount = 0;
     // courseID = course.course_id; //TESTING
-
 
     function lockItems() {
         function lock(item, cb) {
@@ -22,13 +21,11 @@ module.exports = (course, callback) => {
                     // console.log(`Locked ${lockCount} item(s)`);
                     process.stdout.clearLine();
                     process.stdout.cursorTo(0);
-                    process.stdout.write(`Locked ${lockCount} item(s)`);
+                    process.stdout.write(chalk.green(`Locked ${lockCount} item(s)`));
                 }
-
                 cb(null);
             });
         }
-
         asyncLib.eachLimit(itemsToLock, 20, lock, (err) => {
             if (err) {
                 /* this should never be called */
@@ -39,33 +36,36 @@ module.exports = (course, callback) => {
         });
     }
 
-
-    /* function getModuleItems(canvasModule, eachCB) {
+    function getModuleItems(canvasModule, eachCB) {
         canvas.getModuleItems(courseID, canvasModule.id, (err, moduleItems) => {
             if (err) {
                 eachCB(err);
                 return;
             }
-
             var tempObj;
-            moduleItems.forEach(moduleItem => {
-                tempObj = {};
-
-                if (moduleItem.type === 'Page') {
+            asyncLib.each(moduleItems.filter(item => {
+                return item.type === 'Page';
+            }), (moduleItem, callback) => {
+                canvas.get(moduleItem.url, (err, page) => {
+                    tempObj = {};
                     tempObj = {
                         'content_type': 'wiki_page',
-                        'content_id': moduleItem.id,
+                        'content_id': page[0].page_id,
                         'restricted': true
                     };
                     itemsToLock.push(tempObj);
+                    callback(null);
+                });
+            }, (err) => {
+                if (err) {
+                    console.error(chalk.red(err.stack));
                 }
+                eachCB(null);
             });
-            eachCB(null);
         });
-    } */
+    }
 
-
-    /* function getModules() {
+    function getModules() {
         canvas.getModules(courseID, (moduleErr, modules) => {
             if (moduleErr) {
                 console.log('Error getting modules');
@@ -73,13 +73,12 @@ module.exports = (course, callback) => {
                 lockItems();
                 return;
             }
-
             var modulesToKeep = [/student\s*resources/gi, /instructor\s*resources/gi];
             var importantModules = modules.filter(canvasModule => {
                 return modulesToKeep.some(regex => regex.test(canvasModule.name));
             });
 
-            asyncLib.eachLimit(importantModules, 2, getModuleItems, (err) => {
+            asyncLib.eachLimit(importantModules, 1, getModuleItems, (err) => {
                 if (err) {
                     console.log('Error getting module items');
                     console.error(chalk.red(err.stack));
@@ -87,8 +86,7 @@ module.exports = (course, callback) => {
                 lockItems();
             });
         });
-    } */
-
+    }
 
     function getFiles() {
         canvas.getFiles(courseID, (fileErr, files) => {
@@ -106,11 +104,11 @@ module.exports = (course, callback) => {
                 itemsToLock = itemsToLock.concat(files);
             }
             lockItems();
-
         });
     }
 
     getFiles();
+    getModules();
 };
 
 // TESTING
