@@ -64,7 +64,6 @@ function main() {
             console.error(chalk.red(err.stack));
             return;
         }
-
         // asyncLib.eachSeries(csvFile, syncCourse, (err) => {
         asyncLib.eachSeries(csvFile, getOU, (err) => {
             if (err) {
