@@ -33,7 +33,7 @@ module.exports = (course, callback) => {
             // var newSIS = course.course_id, // TESTING
             putObj = {
                 'course[course_format]': 'online',
-                'course[grading_standard_id]': 1,
+                // 'course[grading_standard_id]': 1, /// IDK WHAT THIS DOES....
                 'course[blueprint_restrictions]': {
                     content: false,
                     points: true,
@@ -69,8 +69,13 @@ module.exports = (course, callback) => {
                 updateSettings(null);
                 return;
             }
-            // ERROR for some reason this property is not included on the returned course object
-            console.log('retrieved old description');
+            // TODO for some reason this property is not included on the returned course object
+            if (oldCourse[0].public_description !== undefined) {
+                console.log('retrieved old description');
+            } else {
+                console.log('Unable to pull description or description was empty');
+            }
+            
             updateSettings(oldCourse[0].public_description);
         });
     }

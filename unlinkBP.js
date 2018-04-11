@@ -8,7 +8,7 @@ module.exports = (course, callback) => {
     var bpCourseID = encodeURI(`sis_course_id:${course.blueprint_course_id}`);
     // courseID = encodeURI(`sis_course_id:${course.course_id}`);
     canvas.putJSON(`/api/v1/courses/${bpCourseID}/blueprint_templates/default/update_associations`, {
-        'course_ids_to_remove': [`sis_course_id:${encodeURI(course.course_id)}`]
+        'course_ids_to_remove': [course.courseOU]
     }, (err, body) => {
         if (err) {
             console.log(chalk.red(err.stack));

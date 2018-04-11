@@ -35,7 +35,7 @@ module.exports = (course, callback) => {
     }
 
 
-    function getModuleItems(canvasModule, eachCB) {
+    /* function getModuleItems(canvasModule, eachCB) {
         canvas.getModuleItems(courseID, canvasModule.id, (err, moduleItems) => {
             if (err) {
                 eachCB(err);
@@ -57,10 +57,10 @@ module.exports = (course, callback) => {
             });
             eachCB(null);
         });
-    }
+    } */
 
 
-    function getModules() {
+    /* function getModules() {
         canvas.getModules(courseID, (moduleErr, modules) => {
             if (moduleErr) {
                 console.log('Error getting modules');
@@ -82,7 +82,7 @@ module.exports = (course, callback) => {
                 lockItems();
             });
         });
-    }
+    } */
 
 
     function getFiles() {
