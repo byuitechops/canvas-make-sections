@@ -17,7 +17,7 @@ module.exports = (course, callback) => {
                 console.log('Error enabling new gradebook');
                 console.error(chalk.red(err));
             } else {
-                console.log('Enabled new gradebook');
+                console.log(chalk.green('Enabled new gradebook'));
             }
 
             callback(null, course);
@@ -51,7 +51,7 @@ module.exports = (course, callback) => {
                 console.log('Error updating settings');
                 console.error(chalk.red(putErr));
             } else {
-                console.log('Updated course settings');
+                console.log(chalk.green('Updated course settings'));
             }
 
             enableNewGradebook();

@@ -16,7 +16,7 @@ module.exports = (course, callback) => {
             console.log(chalk.red(err.stack));
             callback(err, course);
         } else {
-            console.log(chalk.blue(`Blueprint course disassociated with the Master course - ${course.course_id}`));
+            console.log(chalk.green(`Blueprint course disassociated with the Master course - ${course.course_id}`));
             callback(null, course);
         }
     });

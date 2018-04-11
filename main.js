@@ -15,6 +15,7 @@ const lockModules = require('./lockModules.js');
 // const publishCourse = require('./publishCourse.js');
 
 function syncCourse(course, eachCB) {
+    console.log(`\n${chalk.blue(course.short_name)}`);
     asyncLib.waterfall([
         asyncLib.constant(course),
         unlinkBP,

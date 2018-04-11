@@ -11,7 +11,7 @@ module.exports = (course, callback) => {
             console.error(chalk.red(err.stack));
             callback(err, course);
         } else {
-            console.log(chalk.blue(`Blueprint course Enabled - ${course.course_id}`));
+            console.log(chalk.green(`Blueprint course Enabled - ${course.course_id}`));
             callback(null, course);
         }
     });

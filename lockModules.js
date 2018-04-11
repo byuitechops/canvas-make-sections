@@ -5,11 +5,11 @@ const chalk = require('chalk');
 const asyncLib = require('async');
 
 module.exports = (course, callback) => {
-// function work(course, callback) {
+// function work(course, callback) { // TESTING
     var itemsToLock = [];
     var courseID = encodeURI(`sis_course_id:${course.course_id}`);
     var lockCount = 0;
-    // var courseID = course.course_id; //TESTING
+    // courseID = course.course_id; //TESTING
 
 
     function lockItems() {
@@ -19,6 +19,10 @@ module.exports = (course, callback) => {
                     console.error(chalk.red(itemErr.stack));
                 } else {
                     lockCount++;
+                    // console.log(`Locked ${lockCount} item(s)`);
+                    process.stdout.clearLine();
+                    process.stdout.cursorTo(0);
+                    process.stdout.write(`Locked ${lockCount} item(s)`);
                 }
 
                 cb(null);
@@ -30,7 +34,7 @@ module.exports = (course, callback) => {
                 /* this should never be called */
                 console.error(chalk.red(err.stack));
             }
-            console.log(`Locked ${lockCount} item(s)`);
+            console.log('\n');
             callback(null, course);
         });
     }
@@ -109,10 +113,10 @@ module.exports = (course, callback) => {
     getFiles();
 };
 
-
+// TESTING
 /* work({
-    course_id: 11123,
-    blueprint_course_id: 11122 // the master. idk why
+    course_id: 11129,
+    blueprint_course_id: 11129 // the master. idk why
 }, (err, course) => {
     if (err) console.error(chalk.red(err.stack));
     else console.log('Done! :D');
