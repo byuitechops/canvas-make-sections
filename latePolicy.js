@@ -6,7 +6,7 @@ const chalk = require('chalk');
 module.exports = (course, callback) => {
     canvas.get(`/api/v1/courses/sis_course_id:${encodeURI(course.blueprint_course_id)}/late_policy`, (err, data) => {
         if (err) {
-            if (err.message.contains('404')) {
+            if (err.message.includes('404')) {
                 console.log(chalk.yellow('No Late policy found'));
             } else {
                 console.log(chalk.red(err.stack));

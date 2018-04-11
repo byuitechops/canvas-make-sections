@@ -72,7 +72,7 @@ module.exports = (course, callback) => {
             if (oldCourse[0].public_description !== undefined) {
                 console.log('retrieved old description');
             } else {
-                console.log('Unable to pull description or description was empty');
+                console.log(chalk.yellow('Unable to pull description or description was empty'));
             }
             
             updateSettings(oldCourse[0].public_description);
