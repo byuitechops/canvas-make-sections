@@ -24,7 +24,7 @@ function syncCourse(course, eachCB) {
         copyGroups,
         latePolicy,
         lockItems,
-        // sectionSettings, // FOR SECTIONS ONLY!
+        // publishCourse, // FOR SECTIONS ONLY!
     ], eachCB);
 }
 

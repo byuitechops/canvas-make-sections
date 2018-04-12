@@ -37,26 +37,33 @@ module.exports = (course, callback) => {
     }
 
     function getModuleItems(canvasModule, eachCB) {
+        function getPage(page, getPageCB) {
+            canvas.get(page.url, (err, page) => {
+                if (err) {
+                    console.log('Error getting Page');
+                    console.error(chalk.red(err));
+                } else {
+                    itemsToLock.push({
+                        'content_type': 'wiki_page',
+                        'content_id': page[0].page_id,
+                        'restricted': true
+                    });
+                }
+                getPageCB(null);
+            });
+        }
+
         canvas.getModuleItems(courseID, canvasModule.id, (err, moduleItems) => {
             if (err) {
                 eachCB(err);
                 return;
             }
-            var tempObj;
-            asyncLib.each(moduleItems.filter(item => {
+
+            var pages = moduleItems.filter(item => {
                 return item.type === 'Page';
-            }), (moduleItem, callback) => {
-                canvas.get(moduleItem.url, (err, page) => {
-                    tempObj = {};
-                    tempObj = {
-                        'content_type': 'wiki_page',
-                        'content_id': page[0].page_id,
-                        'restricted': true
-                    };
-                    itemsToLock.push(tempObj);
-                    callback(null);
-                });
-            }, (err) => {
+            });
+
+            asyncLib.eachLimit(pages, 5, getPage, (err) => {
                 if (err) {
                     console.error(chalk.red(err.stack));
                 }
@@ -78,7 +85,7 @@ module.exports = (course, callback) => {
                 return modulesToKeep.some(regex => regex.test(canvasModule.name));
             });
 
-            asyncLib.eachLimit(importantModules, 1, getModuleItems, (err) => {
+            asyncLib.eachSeries(importantModules, getModuleItems, (err) => {
                 if (err) {
                     console.log('Error getting module items');
                     console.error(chalk.red(err.stack));
