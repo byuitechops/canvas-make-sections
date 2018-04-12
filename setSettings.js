@@ -22,7 +22,6 @@ module.exports = (course, callback) => {
 
             callback(null, course);
         });
-
     }
 
     function updateSettings(description) {
@@ -32,13 +31,6 @@ module.exports = (course, callback) => {
             // var newSIS = course.course_id, // TESTING
             putObj = {
                 'course[course_format]': 'online',
-                // 'course[grading_standard_id]': 1, /// IDK WHAT THIS DOES....
-                'course[blueprint_restrictions]': {
-                    content: false,
-                    points: true,
-                    due_dates: false,
-                    availability_dates: false
-                }
             };
 
         /* copy over course description */
