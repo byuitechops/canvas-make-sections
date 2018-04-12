@@ -6,8 +6,7 @@ const chalk = require('chalk');
 module.exports = (course, callback) => {
     var sisID = encodeURI(`sis_course_id:${course.course_id}`),
         putObj = {
-            'course[is_public_to_auth_users]': false,
-            'course[workflow_state]': true
+            'offer': true
         };
 
     canvas.put(`/api/v1/courses/${sisID}`, putObj, (putErr, updatedCourse) => {
