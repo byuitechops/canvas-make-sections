@@ -11,7 +11,7 @@ const lockItems = require('./lockItems.js');
 const publishCourse = require('./publishCourse.js');
 const setRestrictions = require('./setRestrictions.js');
 
-const csvPath = path.resolve('.', 'Spring Online Course Copy - Sections2');
+const csvPath = path.resolve('.', 'Spring Online Course Copy - Sections2.csv');
 
 var bpTasks = [
     unlinkBP,
