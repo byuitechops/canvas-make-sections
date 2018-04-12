@@ -4,11 +4,10 @@ const canvas = require('canvas-wrapper');
 const chalk = require('chalk');
 
 module.exports = (course, callback) => {
-
-    /* ERROR this doesn't actually seem to do anything... */
-
     var bpCourseID = encodeURI(`sis_course_id:${course.blueprint_course_id}`);
     // courseID = encodeURI(`sis_course_id:${course.course_id}`);
+
+    // WARNING you CAN NOT use an sis_id when specifying the courses to unlink
     canvas.putJSON(`/api/v1/courses/${bpCourseID}/blueprint_templates/default/update_associations`, {
         'course_ids_to_remove': [course.courseOU]
     }, (err, body) => {
